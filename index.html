@@ -116,6 +116,10 @@ tr:hover td { background:#f5f6fa; }
         <button onclick="switchTab(4)">运力公司统计</button>
     </div>
 
+    <div style="text-align:right;margin-bottom:16px;font-size:13px;color:#888;">
+        最新截止日期：<span id="cutoffDate"></span>
+    </div>
+
     <!-- Tab 0: 品类日度 -->
     <div class="panel active" id="panel0">
         <div class="kpi-row" id="kpi0"></div>
@@ -214,6 +218,13 @@ function switchTab(idx) {
 
 // ===== 渲染 =====
 function render() {
+    // 显示最新截止日期
+    if(D.dates && D.dates.length) {
+        const latestDate = D.dates[D.dates.length - 1];
+        const d = new Date(latestDate);
+        const formatted = d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日';
+        document.getElementById('cutoffDate').textContent = formatted;
+    }
     renderTab0();
     renderTab1();
     renderTab2();

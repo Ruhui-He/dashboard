@@ -93,9 +93,10 @@ tr:hover td { background:#f5f6fa; }
 <div id="pw-overlay">
     <div id="pw-box">
         <h2>喜行约车运营分析看板</h2>
-        <p>请输入访问密码</p>
-        <input type="password" id="pw-input" placeholder="请输入密码" autofocus>
-        <button id="pw-btn" onclick="pwCheck()">进入看板</button>
+        <p>请输入账号和密码</p>
+        <input type="text" id="username-input" placeholder="请输入用户名" autofocus>
+        <input type="password" id="pw-input" placeholder="请输入密码">
+        <button id="pw-btn" onclick="pwCheck()">登录</button>
         <div id="pw-err"></div>
     </div>
 </div>
@@ -465,23 +466,34 @@ render();
 
 <script>
 (async function(){
-    var HASH = "7b008629ac7cc1c648f18957bed93a6439c72c1ae52ab4f48ee434a2fbab7852";
+    var USERS = {"admin": "89d11ab098bbab976b559e6dacfddc949dc2711aa4f944692b87eb4b655e492d", "user1": "e47fadbaba0a0962e22b1f217458a4416626917c9710669796328545fb8d3081", "user2": "feaa008cc86f2309dc9d8da2967618af5c49761ce951c773acf776ba1d638804"};
     async function sha256(msg) {
         var buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
         return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
     }
     window.pwCheck = async function() {
-        var inp = document.getElementById("pw-input");
+        var username = document.getElementById("username-input").value.trim();
+        var password = document.getElementById("pw-input").value;
         var err = document.getElementById("pw-err");
-        var hash = await sha256(inp.value);
-        if (hash === HASH) {
-            document.getElementById("pw-overlay").classList.add("hidden");
-            try { sessionStorage.setItem("pw_ok","1"); } catch(e) {}
-        } else {
-            inp.classList.add("error");
+        
+        if (!username || !password) {
             err.style.display = "block";
-            err.textContent = "\u5bc6\u7801\u9519\u8bef\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165";
-            setTimeout(function(){ inp.classList.remove("error"); }, 500);
+            err.textContent = "请输入用户名和密码";
+            return;
+        }
+        
+        var hash = await sha256(username + ":" + password);
+        if (USERS[username] && USERS[username] === hash) {
+            document.getElementById("pw-overlay").classList.add("hidden");
+            try { 
+                sessionStorage.setItem("pw_ok","1"); 
+                sessionStorage.setItem("username", username);
+            } catch(e) {}
+        } else {
+            document.getElementById("pw-input").classList.add("error");
+            err.style.display = "block";
+            err.textContent = "用户名或密码错误，请重新输入";
+            setTimeout(function(){ document.getElementById("pw-input").classList.remove("error"); }, 500);
         }
     };
     try {

@@ -466,7 +466,7 @@ render();
 
 <script>
 (async function(){
-    var USERS = {"admin": "89d11ab098bbab976b559e6dacfddc949dc2711aa4f944692b87eb4b655e492d", "user1": "e47fadbaba0a0962e22b1f217458a4416626917c9710669796328545fb8d3081", "user2": "feaa008cc86f2309dc9d8da2967618af5c49761ce951c773acf776ba1d638804"};
+    var USERS = {"taoyq": "b762c280c5bfbd21e0c401f0a1b79a4e7de64a70102306cd886577a1020eb277", "hej": "a6af319b47f472fe6f6135c4d86567e3d7b35891de3988a898b2a3f5359703cb", "herh": "f9ac6d3c89a4ff7428a7e3811dfcbcadbc045c3c180b0e16db7da6b172449415"};
     async function sha256(msg) {
         var buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
         return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");

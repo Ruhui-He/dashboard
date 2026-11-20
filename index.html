@@ -724,7 +724,7 @@ render();
 
 // ===== 多用户认证 =====
 (async function(){
-    var USERS = {"taoyq": "b762c280c5bfbd21e0c401f0a1b79a4e7de64a70102306cd886577a1020eb277", "hej": "a6af319b47f472fe6f6135c4d86567e3d7b35891de3988a898b2a3f5359703cb", "herh": "f9ac6d3c89a4ff7428a7e3811dfcbcadbc045c3c180b0e16db7da6b172449415", "wangyy": "9aeac80337577e3e6c2e78e6420132ce61d2fc4753dfa77a4710fda4b423d38a", "zhanggq": "c3d90ae32da8ec4923bd984d867459a0848681cb84f9bebd799b7db4a886cef8"};
+    var USERS = {"taoyq": "b762c280c5bfbd21e0c401f0a1b79a4e7de64a70102306cd886577a1020eb277", "hej": "a6af319b47f472fe6f6135c4d86567e3d7b35891de3988a898b2a3f5359703cb", "herh": "f9ac6d3c89a4ff7428a7e3811dfcbcadbc045c3c180b0e16db7da6b172449415", "wangyy": "9aeac80337577e3e6c2e78e6420132ce61d2fc4753dfa77a4710fda4b423d38a", "zhanggq": "c3d90ae32da8ec4923bd984d867459a0848681cb84f9bebd799b7db4a886cef8", "chenyy": "d75baef1c3aaebf5fcac954012476e3eae4420a6115872ae7b07adea9ee80bc2", "liukk": "0f2eb947b98d6a5bab8e5b7ab4b8fd6db5474406f4702779977f03f7af8a54fb"};
     async function sha256(msg) {
         var buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
         return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
